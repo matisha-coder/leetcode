@@ -1,20 +1,19 @@
 class Solution {
 public:
     int hIndex(vector<int>& citations) {
-        int papers = citations.size();
-        vector<int> citationBuckets(papers + 1, 0);
-
-        for (int citation : citations) {
-            citationBuckets[min(citation, papers)]++;
-        }
-
-        int cumulativePapers = 0;
-        for (int hIndex = papers; hIndex >= 0; hIndex--) {
-            cumulativePapers += citationBuckets[hIndex];
-            if (cumulativePapers >= hIndex) {
-                return hIndex;
+        sort(citations.begin(),citations.end(),greater<int>());
+        int h =0;
+        for(int i = 0;i<citations.size();i++)
+        {
+            if(citations[i]>=i+1)
+            {
+                 h = i+1;
             }
+           else
+           {
+            break;
+           }
         }
-        return 0;        
+        return h;
     }
 };
